@@ -26,9 +26,9 @@ Depois de inseridos são gravados no diretório na pasta `extracted/DIA/HORA/dat
 
 #### Adiciona os dados
  
-```http
+``http
   POST /add
-```
+``
 
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
@@ -43,7 +43,7 @@ Depois de inseridos são gravados no diretório na pasta `extracted/DIA/HORA/dat
 
 #### Retorna os usuários cadastrados 
 
-```http
+``http
   GET /getallusers
-```
+``
 
