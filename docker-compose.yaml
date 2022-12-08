@@ -1,0 +1,8 @@
+services:
+  backend_api:
+    build: .
+    container_name: 'backend-api-container'
+    ports: 
+      - 8000:8000
+    environment:
+      - SQLALCHEMY_DATABASE_URL= 'sqlite:///user.sqlite'

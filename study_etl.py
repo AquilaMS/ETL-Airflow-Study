@@ -4,13 +4,16 @@ import pandas as pd
 from datetime import datetime 
 import sqlite3
 from sqlalchemy.orm import sessionmaker
-import random as rd
+import client_api
+from fastapi.encoders import jsonable_encoder
+import os
 
 RANDOM_USER_URL = 'https://randomuser.me/api/'
-DATA_COUNT = 10
-DATABASE_LOCATION = 'sqlite:///users.sqlite'
+DATA_COUNT = None
+DATABASE_LOCATION = os.environ['SQLALCHEMY_DATABASE_URL']
 
 stored_data = []
+
 def validate_data(df: pd.DataFrame):
     
     if df.empty:
@@ -61,9 +64,10 @@ def verify_data_integrity(stored_data):
         else:
             return False
         
-def execute_good_sql(user_dataframe):
+
+def execute_good_sql(user_dataframe, auth_admin):
     df = pd.DataFrame(user_dataframe)
-    print(df)
+    #print(df)
     engine = sqlalchemy.create_engine(DATABASE_LOCATION)
     conn = sqlite3.connect('users.sqlite')
     cursor = conn.cursor()
@@ -81,11 +85,12 @@ def execute_good_sql(user_dataframe):
        """
     cursor.execute(good_sql_query)
     try:
-        df.to_sql('tb_users', engine, index = False, if_exists = 'append')
+        log = client_api.insert_with_api(auth_admin, df.to_json())
+        print(log)
     except:
         print('Error batch')
     conn.close()
-    
+
 def execute_bad_sql(user_dataframe):
     df = pd.DataFrame(user_dataframe)
     print(df)
