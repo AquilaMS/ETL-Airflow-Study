@@ -49,6 +49,3 @@ def login(login_obj):
     print('Wrong password/username')
     raise Exception('Wrong password/username')
     
-#if 1==1:
-  #insert_with_api(auth_admin, df_fake)
-  #parse_data(df_fake)
